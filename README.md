@@ -73,7 +73,7 @@ We can see a big spike in execution time for our recursive implementation. The p
 
 We can improve the execution time of our recursive function by implementing a cache that will store every nth Fibonacci number after the first time it is calculated, and just do a cache lookup every time the recursive function is called to find if the number was calculated before.
 
-The Python implementation:
+### The dictionary implementation
 
 ```python
 fibonacci_cache = {0: 0, 1: 1}
@@ -87,7 +87,7 @@ def fibonacci_memo(n):
         return value
 ```
 
-To make an accurate stopwatch measurement we need to reset the cache in between each iteration:
+To make an accurate stopwatch measurement we need to reset the cache in between each iteration. If it wasn't for the benchmark cache would be very useful and should not be reset:
 
 ```python
 if func.__name__ == 'fibonacci_memo':
@@ -102,5 +102,24 @@ The stopwatch output is:
 As we see the function is blazing fast. The other problem that we run into is the recursive call limitation in Python which stops us from putting more then a 1000 recursive calls on the stack.
 
 Even though modifying that limitation is possible it's not recommended therefore it's not a realistic solution to real world problems that we might face with using Python in the future.
+
+### The decorator cache implementation
+
+Using Python's *functools* module we can just use a build-in way that python handles cache. There are several options, to name a few: *cache* or *lru_cache* functions.
+
+We can use mentioned functions as decorators to the already defined recursive implementation:
+
+```python
+@cache
+def fibonacci_recursive(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    elif n > 2:
+        return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
+```
+
+The biggest problem with this implementation is that using a decorator puts a function on the stack and with that in a sense halves the built-in recursive call limit of Python.
 
 ## Tabulation approach

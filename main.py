@@ -1,3 +1,4 @@
+from functools import lru_cache
 from time import time
 
 
@@ -45,6 +46,16 @@ def fibonacci_memo(n):
         value = fibonacci_memo(n - 1) + fibonacci_memo(n - 2)
         fibonacci_cache[n] = value
         return value
+
+
+@lru_cache(maxsize=1000)
+def fibonacci_lru_cached(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return fibonacci_lru_cached(n - 1) + fibonacci_lru_cached(n - 2)
 
 
 # use functions after this comment
