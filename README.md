@@ -1,1 +1,1 @@
-# fibonacci-exercise
+# Fibonacci exercise
