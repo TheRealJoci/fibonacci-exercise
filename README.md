@@ -42,7 +42,7 @@ def stopwatch_iterative(func, iterations):
     return stopwatch_wrapper
 
 # Execution
-stopwatch_iterative(function)(iterations)
+stopwatch_iterative(function, iterations)(function_input)
 ```
 
 ## Recursive approach
